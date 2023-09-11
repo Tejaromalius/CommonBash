@@ -19,3 +19,4 @@ To use these recipes for current user:
 
 ## Available Recipes
 - [**activenv**](scripts/activenv/activenv.sh): automatic Conda environment detection & activation
+- [**fancy-log**](scripts/fancy-log/fancy-log.sh): git extension for a clearer log display

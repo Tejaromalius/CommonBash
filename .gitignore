@@ -3,3 +3,6 @@ vs.code-workspace
 poetry.lock
 
 # directories
+**/.pytest_cache/
+**/__pycache__/
+

@@ -12,7 +12,7 @@ gstat() {
     branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
     # check if the current directory is not a Git repository.
     if ! git rev-parse --is-inside-work-tree &>/dev/null; then
-        echo "${RED}Not in a Git repository.${RESET}"
+        echo -e "${RED}Not in a Git repository.${RESET}"
         return 1
     fi
     # declare variables to store information about branch status.
@@ -44,7 +44,7 @@ gstat() {
     status=$(git status --short)
     # display uncommitted changes if there are any.
     if [[ -n "$status" ]]; then
-        echo -e "\n${BOLD}Changes not staged for commit:${RESET}\n$status"
+        echo -e "\n${BOLD}Changes:${RESET}\n$status"
     fi
 }
 # <<< gstat <<<

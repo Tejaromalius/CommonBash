@@ -3,9 +3,9 @@ _CommonBash_ is a cookbook containing simple, yet, effective 'recipes' to improv
 
 ## Installation
 ### Piece of cake method (aka easy way)
-Replacing [recipe's name], run the following command in terminal:
+Replacing `recipes_name` with the actual name, run the following command in terminal:
 
-    curl -sSL https://raw.githubusercontent.com/Tejaromalius/CommonBash/main/scripts/[recipe's name]/INSTALL.sh | bash -i 
+    bash <(curl -sSL https://raw.githubusercontent.com/Tejaromalius/CommonBash/main/INSTALL.sh) recipes_name
 
 ### John Wick method (aka hard way)
 To use these recipes for current user:

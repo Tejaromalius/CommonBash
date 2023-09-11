@@ -1,6 +1,6 @@
 
 # >>> activenv >>>
-activate_conda_env() {
+activenv() {
   # Find all subdirectories in the current directory
   subdirectories=$(find "$PWD" -maxdepth 1 -mindepth 1 -type d)
 
@@ -28,6 +28,4 @@ activate_conda_env() {
     echo "Conda environment '$current_dir_base' not found."
   fi
 }
-
-alias activenv=activate_conda_env
 # <<< activenv <<<

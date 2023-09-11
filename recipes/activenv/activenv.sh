@@ -1,26 +1,25 @@
-
 # >>> activenv >>>
 activenv() {
-  # Find all subdirectories in the current directory
+  # find all subdirectories in the current directory
   subdirectories=$(find "$PWD" -maxdepth 1 -mindepth 1 -type d)
 
-  # Loop through the subdirectories
+  # loop through the subdirectories
   for subdir in $subdirectories; do
-    # Check if the subdirectory is a Conda environment
+    # check if the subdirectory is a Conda environment
     if [ -d "$subdir/conda-meta/" ]; then
-      # Activate the Conda environment with the -p flag
+      # activate the Conda environment with the -p flag
       conda activate "$subdir"
       # echo "Activated Conda environment in subdirectory: $subdir"
-      return  # Exit the function after activation
+      return  # exit the function after activation
     fi
   done
 
-  # Get the base name of the current directory
+  # get the base name of the current directory
   current_dir_base=$(basename "$PWD")
 
-  # Check if a Conda environment with the same name exists
+  # check if a Conda environment with the same name exists
   if conda info --envs | grep -qE "^\s*$current_dir_base\s"; then
-    # Activate the Conda environment
+    # activate the Conda environment
     conda activate "$current_dir_base"
     # echo "Activated Conda environment: $current_dir_base"
     return

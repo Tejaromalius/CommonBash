@@ -8,7 +8,7 @@ if grep -q -w "$recipe" ~/.bashrc; then
 else
     # recipe doesn't exist
     # download code from github repo
-    request_result="$(curl -sSL https://raw.githubusercontent.com/Tejaromalius/CommonBash/main/scripts/$recipe/$recipe.sh)";
+    request_result="$(curl -sSL https://raw.githubusercontent.com/Tejaromalius/CommonBash/main/recipes/$recipe/$recipe.sh)";
     if [ "$request_result" != "404: Not Found" ]; then
         # recipe exists in repo
         # append recipe to .bashrc

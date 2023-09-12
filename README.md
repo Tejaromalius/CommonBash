@@ -18,7 +18,7 @@ To use these recipes for current user:
 > Remember to restart terminal once installed!
 
 ## Available Recipes
-- [**activenv**](scripts/activenv/activenv.sh): automatic Conda environment detection & activation
-- [**fancy-log**](scripts/fancy-log/fancy-log.sh): git extension for waterfall log
-- [**gstat**](scripts/gstat/gstat.sh): git extension for beautiful status
+- [**condanv**](scripts/condanv/condanv.sh): automatic Conda environment detection & activation
+- [**glog**](scripts/glog/glog.sh): git extension for beautiful waterfall log
+- [**gstat**](scripts/gstat/gstat.sh): git extension for clearer status
 - [**lsdid**](scripts/lsdid/lsdid.sh): pre-configured 'lsd' command for a sexy `ls` output

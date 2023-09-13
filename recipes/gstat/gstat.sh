@@ -1,50 +1,49 @@
 # >>> gstat >>>
 gstat() {
-    # define color codes for formatting text
-    RED='\033[0;31m'
-    GREEN='\033[0;32m'
-    YELLOW='\033[0;33m'
-    BLUE='\033[0;34m'
-    BOLD='\033[1m'
-    RESET='\033[0m'
-    # get the current Git branch's name.
-    local branch
-    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    # check if the current directory is not a Git repository.
-    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
-        echo -e "${RED}Not in a Git repository.${RESET}"
-        return 1
-    fi
-    # declare variables to store information about branch status.
-    local ahead behind staged modified untracked
-    # get the number of commits ahead of the upstream branch.
-    ahead=$(git rev-list --count HEAD..@"upstream" 2>/dev/null)
-    # get the number of commits behind the upstream branch.
-    behind=$(git rev-list --count @"upstream"..HEAD 2>/dev/null)
-    # get the number of staged (indexed) files.
-    staged=$(git diff --cached --numstat | wc -l)
-    # get the number of modified but not staged files.
-    modified=$(git diff --numstat | wc -l)
-    # get the number of untracked files.
-    untracked=$(git ls-files --others --exclude-standard | wc -l)
-    # display branch name and status information.
-    echo -e "${BOLD}Branch: ${BLUE}$branch${RESET}"
-    if [[ -n "$ahead" ]]; then
-        echo -e "${YELLOW}Ahead of upstream: ${ahead} commits${RESET}"
-    fi
-    if [[ -n "$behind" ]]; then
-        echo -e "${YELLOW}Behind upstream: ${behind} commits${RESET}"
-    fi
+  # check if the current directory is a Git repository
+  if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    echo "$(tput setaf 1)Warning: Not a Git repository.$(tput sgr0)"
+    return 1
+  fi
+
+  # get the current branch name
+  branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+
+  # Display the branch name
+  echo "$(tput bold setaf 6)Branch: $branch$(tput sgr0)"
+  echo
+
+  # check for changes to be committed
+  changes_to_commit=$(git status --porcelain=v1 | awk '/^[MDRCTU] / {print "\t./" $2}')
+
+  # check for changes not staged for commit
+  changes_not_staged=$(git status --porcelain=v1 | awk '/^ [MDRCTU]/ {print "\t./" $2}')
+
+  # check for untracked files
+  untracked_files=$(git status --porcelain=v1 | awk '/^\?\?/ {print "\t./" $2}')
+
+  # display categories with non-empty content
+  if [[ -n $changes_to_commit ]]; then
+    echo "$(tput bold setaf 2)Changes to be committed:$(tput sgr0)"
+    echo "$changes_to_commit"
     echo
-    echo -e "${GREEN}Staged: ${staged} files${RESET}"
-    echo -e "${GREEN}Modified: ${modified} files${RESET}"
-    echo -e "${RED}Untracked: ${untracked} files${RESET}"
-    # get the short status of the working directory.
-    local status
-    status=$(git status --short)
-    # display uncommitted changes if there are any.
-    if [[ -n "$status" ]]; then
-        echo -e "\n${BOLD}Changes:${RESET}\n$status"
-    fi
+  fi
+
+  if [[ -n $changes_not_staged ]]; then
+    echo "$(tput bold setaf 1)Changes not staged for commit:$(tput sgr0)"
+    echo "$changes_not_staged"
+    echo
+  fi
+
+  if [[ -n $untracked_files ]]; then
+    echo "$(tput setaf 3)Untracked files:$(tput sgr0)"
+    echo "$untracked_files"
+    echo
+  fi
+
+  # display a message if there are no changes
+  if [[ -z $changes_to_commit && -z $changes_not_staged && -z $untracked_files ]]; then
+    echo "No changes."
+  fi
 }
 # <<< gstat <<<

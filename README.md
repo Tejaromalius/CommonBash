@@ -21,4 +21,4 @@ To use these recipes for current user:
 - [**condanv**](scripts/condanv/condanv.sh): automatic Conda environment detection & activation
 - [**glog**](scripts/glog/glog.sh): git extension for beautiful waterfall log
 - [**gstat**](scripts/gstat/gstat.sh): git extension for clearer status
-- [**lsdid**](scripts/lsdid/lsdid.sh): pre-configured 'lsd' command for a sexy `ls` output
+- [**exal**](scripts/exal/exal.sh): pre-configured 'exa' command for a sexy `ls` output

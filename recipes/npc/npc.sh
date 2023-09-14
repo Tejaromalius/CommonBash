@@ -1,0 +1,13 @@
+# >>> npc >>>
+npc() {
+    # define an array of directory names to remove
+    local cache_directories=("__pytest__" ".pytest_cache" "other_cache_directory")
+
+    # iterate over each directory name
+    for directory in "${cache_directories[@]}"; do
+        # remove directory using the rm command
+        find . -maxdepth 5 -type d -name "$directory" -exec rm -r {} +
+    done
+    printf "\e[1;33mNo Python Cache directories anymore! \n\e[0m"
+}
+# <<< npc <<<

@@ -40,7 +40,7 @@ gstat() {
 }')
 
   # check for untracked files
-  untracked_files=$(git status --porcelain=v1 | awk '/^\?\?/ {color = "\033[95m"; print "\t" color $0}')
+  untracked_files=$(git status --porcelain=v1 | awk '/^\?\?/ {color = "\033[95m"; print "\t" color $0 "\033[0m"}')
 
   # display categories with non-empty content
   if [[ -n $changes_to_commit ]]; then

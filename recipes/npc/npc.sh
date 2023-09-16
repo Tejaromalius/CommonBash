@@ -1,7 +1,7 @@
 # >>> npc >>>
 npc() {
     # define an array of directory names to remove
-    local cache_directories=("__pytest__" ".pytest_cache" "other_cache_directory")
+    local cache_directories=("__pycache__" ".pytest_cache" "other_cache_directory")
 
     # iterate over each directory name
     for directory in "${cache_directories[@]}"; do

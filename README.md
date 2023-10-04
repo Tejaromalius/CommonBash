@@ -18,7 +18,7 @@ To use these recipes for current user:
 > Remember to restart terminal once installed!
 
 ## Available Recipes
-- [**condanv**](scripts/condanv/condanv.sh): automatic Conda environment detection & activation
-- [**glog**](scripts/glog/glog.sh): git extension for beautiful waterfall log
-- [**gstat**](scripts/gstat/gstat.sh): git extension for clearer status
-- [**exal**](scripts/exal/exal.sh): pre-configured 'exa' command for a sexy `ls` output
+- [**condanv**](recipes/condanv/condanv.sh): automatic Conda environment detection & activation
+- [**glog**](recipes/glog/glog.sh): git extension for beautiful waterfall log
+- [**gstat**](recipes/gstat/gstat.sh): git extension for clearer status
+- [**exal**](recipes/exal/exal.sh): pre-configured 'exa' command for a sexy `ls` output

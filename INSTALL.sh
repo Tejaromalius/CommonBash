@@ -34,8 +34,6 @@ if [ "$request_result" != "404: Not Found" ]; then
 
     # append recipe to .recipes file
     printf "%s\n" "$request_result" >> "$recipes_path"
-    # source the .bashrc
-    source "$bashrc_path";
     echo -e "\033[0;32mdone! restart terminal and run '$recipe'! \033[0m"
 else
     echo -e "\033[0;33m'$recipe' not found in repo. \033[0;31maborting..\033[0m"

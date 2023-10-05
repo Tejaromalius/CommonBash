@@ -1,49 +1,60 @@
 # >>> condanv >>>
 condanv() {
-  # get information about the currently active conda environment.
-  conda_info=$(conda info)
+  # check if a directory is a conda environment
+  is_conda_environment() {
+    local subdir="$1"
+    [ -d "$subdir/conda-meta/" ]
+  }
 
-  # check if there is no active conda environment or if the active environment is 'none'.
-  if [[ -z "$conda_info" || "$conda_info" == *"active environment : none"* ]]; then
-    # find all subdirectories in the current directory.
-    subdirectories=$(find "$PWD" -maxdepth 1 -mindepth 1 -type d)
+  # activate a conda environment by name
+  activate_conda_environment() {
+    local env_name="$1"
+    conda activate "$env_name"
+  }
 
-    # loop through each subdirectory.
+  # set the secondary command prompt (PS2) to match PS1
+  set_ps2_to_ps1() {
+    export PS2=$PS1
+  }
+
+  # update PS1 to display the current environment's name
+  update_ps1() {
+    local env_name="$1"
+    PS1="($env_name) $PS1"
+  }
+
+  # deactivate the active conda environment and restore PS1
+  deactivate_conda_environment() {
+    conda deactivate
+    PS1=$PS2
+  }
+
+  local conda_info=$(conda info)
+
+  if [[ -z "$conda_info" || "$conda_info" == *"active environment : None"* ]]; then
+    local subdirectories=$(find "$PWD" -maxdepth 1 -mindepth 1 -type d)
+
     for subdir in $subdirectories; do
-      # check if the subdirectory contains a 'conda-meta' directory, indicating it's a conda environment.
-      if [ -d "$subdir/conda-meta/" ]; then
-        # set the secondary command prompt (PS2) to match the primary command prompt (PS1).
-        export PS2=$PS1
-        # update the primary command prompt (PS1) to display the current environment's name.
-        PS1="(${PWD##*/}) $PS1"
-        # activate the conda environment in the subdirectory.
-        conda activate "$subdir"
+      if is_conda_environment "$subdir"; then
+        set_ps2_to_ps1
+        update_ps1 "${PWD##*/}"
+        activate_conda_environment "$subdir"
         return
       fi
     done
 
-    # get the base name of the current directory.
-    current_dir_base=$(basename "$PWD")
+    local current_dir_base=$(basename "$PWD")
 
-    # check if an environment with the same name exists in conda.
     if conda info --envs | grep -qE "^\s*$current_dir_base\s"; then
-      # activate the conda environment with the same name as the current directory.
-      conda activate "$current_dir_base"
-      # set the secondary command prompt (PS2) to match the primary command prompt (PS1).
-      export PS2=$PS1
-      # update the primary command prompt (PS1) to display the current environment's name.
-      PS1="(${PWD##*/}) $PS1"
+      activate_conda_environment "$current_dir_base"
+      set_ps2_to_ps1
+      update_ps1 "${PWD##*/}"
       return
     else
-      # display an error message if the conda environment is not found.
       echo "conda environment '$current_dir_base' not found."
     fi
   else
-    # deactivate the currently active conda environment.
-    conda deactivate
-    # restore the primary command prompt (PS1) to its original state.
-    PS1=$PS2
-    return
+    deactivate_conda_environment
   fi
 }
 # <<< condanv <<<

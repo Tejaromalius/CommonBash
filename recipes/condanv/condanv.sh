@@ -59,9 +59,9 @@ condanv() {
         # if an environment exists in the current directory, activate it.
         update_ps
         activate_conda
-        echo $conda_is_active
       else
         # if no environment exists, prompt the user to create one.
+        echo -n "Local environment does not exist. Do you want to create one (Y/n)? "
         read create_environment_input
         if [[ $create_environment_input =~ [y|Y] ]]; then
           create_environment

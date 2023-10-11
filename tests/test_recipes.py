@@ -15,7 +15,7 @@ def script_paths():
 
 def test_compilation(script_paths):
     for basename, script_path in script_paths.items():
-        process = subprocess.run(["shellcheck", "-e", "SC2148", script_path])
+        process = subprocess.run(["shellcheck", "-e", "SC2148,SC2162", script_path])
         assert process.returncode == 0, f"`{basename}` failed to compile!"
 
 

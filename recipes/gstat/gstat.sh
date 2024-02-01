@@ -1,19 +1,15 @@
 # >>> gstat >>>
 gstat() {
-  # check if the current directory is a Git repository
   if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
     echo "$(tput setaf 1)Warning: Not a Git repository.$(tput sgr0)"
     return 1
   fi
 
-  # get the current branch name
   branch=$(git symbolic-ref --short HEAD 2>/dev/null)
 
-  # Display the branch name
   echo "$(tput bold setaf 6)Branch: $branch$(tput sgr0)"
   echo
 
-  # check for changes to be committed
   changes_to_commit=$(git status --short | awk '/^[MADRCU]/ {
     color = "";
     if ($1 ~ /^M/) color = "\033[31m";   # Red for modified
@@ -26,7 +22,6 @@ gstat() {
     print "\t" color $0 "\033[0m";       # Reset color
 }')
 
-  # check for changes not staged for commit
   changes_not_staged=$(git status --short | awk '/^.[MADRCU]/ {
     color = "";
     if ($1 ~ /^.?M/) color = "\033[31m";   # Red for modified
@@ -39,10 +34,8 @@ gstat() {
     print "\t" color $0 "\033[0m";       # Reset color
 }')
 
-  # check for untracked files
   untracked_files=$(git status --porcelain=v1 | awk '/^\?\?/ {color = "\033[95m"; print "\t" color $0 "\033[0m"}')
 
-  # display categories with non-empty content
   if [[ -n $changes_to_commit ]]; then
     echo "$(tput bold setaf 253)Changes to be committed:$(tput sgr0)"
     echo "$changes_to_commit"
@@ -61,7 +54,6 @@ gstat() {
     echo
   fi
 
-  # display a message if there are no changes
   if [[ -z $changes_to_commit && -z $changes_not_staged && -z $untracked_files ]]; then
     echo "No changes."
   fi

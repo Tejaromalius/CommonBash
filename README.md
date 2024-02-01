@@ -1,4 +1,8 @@
 # CommonBash: Recipes for a Better Workflow
+![GitHub Tag](https://img.shields.io/github/v/tag/Tejaromalius/CommonBash?label=Tag)
+![GitHub License](https://img.shields.io/github/license/Tejaromalius/CommonBash?label=License)
+
+
 _CommonBash_ is a cookbook containing simple, yet, effective 'recipes' to improve the overall workflow in **Linux** environments.
 
 ## Installation
@@ -22,3 +26,4 @@ To use these recipes for current user:
 - [**glog**](recipes/glog/glog.sh): git extension for beautiful waterfall log
 - [**gstat**](recipes/gstat/gstat.sh): git extension for clearer status
 - [**exal**](recipes/exal/exal.sh): pre-configured 'exa' command for a sexy `ls` output
+- [**npc**](recipes/npc/npc.sh): get rid of the all pycaches in the current directory

@@ -27,3 +27,4 @@ To use these recipes for current user:
 - [**gstat**](recipes/gstat/gstat.sh): git extension for clearer status
 - [**exal**](recipes/exal/exal.sh): pre-configured 'exa' command for a sexy `ls` output
 - [**npc**](recipes/npc/npc.sh): get rid of the all pycaches in the current directory
+- [**myip**](recipes/myip/myip.sh): see your public ip address quickly

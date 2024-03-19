@@ -28,3 +28,4 @@ To use these recipes for current user:
 - [**exal**](recipes/exal/exal.sh): pre-configured 'exa' command for a sexy `ls` output
 - [**npc**](recipes/npc/npc.sh): get rid of the all pycaches in the current directory
 - [**myip**](recipes/myip/myip.sh): see your public ip address quickly
+- [**kync**](recipes/kync/kync.sh): quickly sync Ubuntu's main theme accent to Asus keyboard color

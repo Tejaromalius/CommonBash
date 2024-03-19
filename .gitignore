@@ -3,7 +3,8 @@ vs.code-workspace
 poetry.lock
 
 # directories
-.condanv/
+**/.vscode/
+**/.venv/
 **/.pytest_cache/
 **/__pycache__/
 

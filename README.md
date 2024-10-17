@@ -25,7 +25,7 @@ To use these recipes for current user:
 - [**condanv**](recipes/condanv/condanv.sh): automatic Conda environment detection & activation
 - [**glog**](recipes/glog/glog.sh): git extension for beautiful waterfall log
 - [**gstat**](recipes/gstat/gstat.sh): git extension for clearer status
-- [**exal**](recipes/exal/exal.sh): pre-configured 'exa' command for a sexy `ls` output
+- [**ezal**](recipes/ezal/ezal.sh): pre-configured 'eza' command for a sexy `ls` output
 - [**npc**](recipes/npc/npc.sh): get rid of the all pycaches in the current directory
 - [**myip**](recipes/myip/myip.sh): see your public ip address quickly
 - [**kync**](recipes/kync/kync.sh): quickly sync Ubuntu's main theme accent to Asus keyboard color

@@ -1,7 +1,7 @@
 # >>> condanv >>>
 conda_is_active=false
 
-condanv() {
+function condanv() {
   conda_exists() {
     if which conda &> /dev/null; then
       return 0

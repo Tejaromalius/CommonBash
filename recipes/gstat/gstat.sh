@@ -1,5 +1,5 @@
 # >>> gstat >>>
-gstat() {
+function gstat() {
   if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
     echo "$(tput setaf 1)Warning: Not a Git repository.$(tput sgr0)"
     return 1

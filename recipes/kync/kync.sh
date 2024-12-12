@@ -1,5 +1,5 @@
-# >>> Kync >>>
-kync () {
+# >>> kync >>>
+function kync() {
   get_main_theme_file() {
     theme_name=$(gsettings get org.gnome.desktop.interface gtk-theme | tr -d "\n" | tr -d "='=")
     theme_dir="/usr/share/themes/$theme_name"
@@ -21,4 +21,4 @@ kync () {
     echo "Could not determine the main theme file location."
   fi
 }
-# <<< Kync <<<
+# <<< kync <<<

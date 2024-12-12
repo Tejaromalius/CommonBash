@@ -1,5 +1,5 @@
 # >>> ezal >>>
-ezal() {
+function ezal() {
   if command -v eza &>/dev/null; then
     eza -l -a -L 2 -s name --group-directories-first "$@"
   else

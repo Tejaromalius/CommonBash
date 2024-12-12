@@ -1,5 +1,5 @@
 # >>> npc >>>
-npc() {
+function npc() {
     local cache_directories=("__pycache__" ".pytest_cache" "")
 
     for directory in "${cache_directories[@]}"; do

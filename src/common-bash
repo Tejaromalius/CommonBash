@@ -61,13 +61,13 @@ delete_recipe() {
 # Function to display help
 show_help() {
   echo -e "\033[0;32mUsage:\033[0m"
-  echo -e "  $0 [OPTION] [RECIPE_NAME]"
+  echo -e "  common-bash [OPTION] [RECIPE_NAME]"
   echo -e "\033[0;32mOptions:\033[0m"
+  echo -e "  [RECIPE_NAME] Fetch a specific recipe by name."
   echo -e "  --all       Fetch all recipes from the repository."
   echo -e "  --list      List all available recipes in the repository."
   echo -e "  --delete    Delete a specified recipe from ~/.recipes."
   echo -e "  --help      Display this help message."
-  echo -e "  [RECIPE_NAME] Fetch a specific recipe by name."
 }
 
 # Handle different options

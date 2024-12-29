@@ -1,0 +1,117 @@
+#! /usr/bin/bash
+
+bashrc_path="$HOME/.bashrc"
+recipes_path="$HOME/.recipes"
+
+# Ensure recipes source is added to .bashrc
+if ! grep -q -x "source $recipes_path" "$bashrc_path"; then
+  echo -e "\nsource $recipes_path" >>"$bashrc_path"
+fi
+
+recipe_name="$1"
+
+# Function to fetch a recipe
+fetch_recipe() {
+  local recipe="$1"
+  local request_url="https://raw.githubusercontent.com/Tejaromalius/CommonBash/main/src/recipes/$recipe/$recipe.sh"
+  local request_result
+
+  request_result="$(curl -sSL "$request_url")"
+
+  if [ "$request_result" != "404: Not Found" ]; then
+    if [ ! -f "$recipes_path" ]; then
+      touch "$recipes_path"
+    else
+      if grep -q -w "$recipe" "$recipes_path"; then
+        echo -e "\033[0;33m'$recipe' exists in ~/.recipes. \033[0;32mUpdating...\033[0m"
+
+        local start_marker="# >>> $recipe >>>"
+        local end_marker="# <<< $recipe <<<"
+
+        sed -i "/$start_marker/,/$end_marker/d" "$recipes_path"
+      fi
+    fi
+
+    printf "%s\n" "$request_result" >>"$recipes_path"
+    echo -e "\033[0;32mSuccessfully added '$recipe'!\033[0m"
+  else
+    echo -e "\033[0;33m'$recipe' not found in repo. Skipping...\033[0m"
+  fi
+}
+
+# Function to list available recipes
+list_recipes() {
+  curl -sSL https://api.github.com/repos/Tejaromalius/CommonBash/contents/src/recipes | grep '"name"' | awk -F '"' '{print $4}'
+}
+
+# Function to delete a recipe
+delete_recipe() {
+  local recipe="$1"
+  local start_marker="# >>> $recipe >>>"
+  local end_marker="# <<< $recipe <<<"
+
+  if grep -q -w "$recipe" "$recipes_path"; then
+    sed -i "/$start_marker/,/$end_marker/d" "$recipes_path"
+    echo -e "\033[0;32mSuccessfully deleted '$recipe'.\033[0m"
+  else
+    echo -e "\033[0;33mRecipe '$recipe' not found in ~/.recipes.\033[0m"
+  fi
+}
+
+# Function to display help
+show_help() {
+  echo -e "\033[0;32mUsage:\033[0m"
+  echo -e "  $0 [OPTION] [RECIPE_NAME]"
+  echo -e "\033[0;32mOptions:\033[0m"
+  echo -e "  --all       Fetch all recipes from the repository."
+  echo -e "  --list      List all available recipes in the repository."
+  echo -e "  --delete    Delete a specified recipe from ~/.recipes."
+  echo -e "  --help      Display this help message."
+  echo -e "  [RECIPE_NAME] Fetch a specific recipe by name."
+}
+
+# Handle different options
+case "$recipe_name" in
+--all)
+  all_recipes=$(list_recipes)
+
+  if [ -z "$all_recipes" ]; then
+    echo -e "\033[0;31mFailed to fetch recipes. Please check the repository URL or your internet connection.\033[0m"
+    exit 1
+  fi
+
+  for recipe in $all_recipes; do
+    fetch_recipe "$recipe"
+  done
+
+  echo -e "\033[0;32mAll recipes have been fetched! Restart the terminal to use them.\033[0m"
+  ;;
+
+--list)
+  echo -e "\033[0;32mAvailable recipes:\033[0m"
+  list_recipes
+  ;;
+
+--delete)
+  if [ -z "$2" ]; then
+    echo -e "\033[0;31mPlease specify the recipe name to delete.\033[0m"
+    exit 1
+  fi
+  delete_recipe "$2"
+  ;;
+
+--help)
+  show_help
+  ;;
+
+*)
+  if [ -z "$recipe_name" ]; then
+    echo -e "\033[0;31mNo option or recipe name provided. Use --help for usage information.\033[0m"
+    exit 1
+  fi
+  fetch_recipe "$recipe_name"
+  echo -e "\033[0;32mDone! Restart terminal and run '$recipe_name'!\033[0m"
+  ;;
+esac
+
+exit 0

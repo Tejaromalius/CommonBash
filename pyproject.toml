@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "commonbash"
-version = "7.0"
+version = "8.0"
 description = "CommonBash: Recipes for a Better Workflow"
 authors = ["tejaromalius <tayefi.ilia@protonmail.com>"]
 license = "MIT"

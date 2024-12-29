@@ -1,31 +1,31 @@
 #! /usr/bin/bash
 
-bashrc_path="$HOME/.bashrc"
-recipes_path="$HOME/.recipes"
+# Define the URL for the script and the target path
+script_url="https://raw.githubusercontent.com/Tejaromalius/CommonBash/main/src/common-bash"
+target_path="$HOME/.local/bin"
 
-if ! grep -q -x "source $recipes_path" "$bashrc_path"; then
-    printf "\nsource %s" "$recipes_path" >> "$bashrc_path"
+# Ensure the target directory exists
+if [ ! -d "$target_path" ]; then
+  mkdir -p "$target_path"
 fi
 
-recipe="$1";
+# Fetch the script from GitHub
+curl -sSL "$script_url" -o "$target_path/common-bash"
 
-request_result="$(curl -sSL https://raw.githubusercontent.com/Tejaromalius/CommonBash/main/recipes/"$recipe"/"$recipe.sh")";
-if [ "$request_result" != "404: Not Found" ]; then
-    if [ ! -f "$recipes_path" ] > /dev/null; then
-        touch "$recipes_path"
-    else
-        if grep -q -w "$recipe" "$recipes_path"; then
-            echo -e "\033[0;33m'$recipe' exists in ~/.recipes. \033[0;32mupdating..\033[0m"
+# Check if the script was downloaded successfully
+if [ -f "$target_path/common-bash" ]; then
+  chmod +x "$target_path/common-bash"
+  echo -e "\033[0;32mThe script has been installed successfully to $target_path/common-bash\033[0m"
 
-            start_marker="# >>> $recipe >>>"
-            end_marker="# <<< $recipe <<<"
-            
-            sed -i "/$start_marker/,/$end_marker/d" "$recipes_path"
-        fi
-    fi
-
-    printf "%s\n" "$request_result" >> "$recipes_path"
-    echo -e "\033[0;32mdone! restart terminal and run '$recipe'! \033[0m"
+  # Add ~/.local/bin to PATH if not already included
+  if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
+    echo -e "\033[0;33m$HOME/.local/bin is not in your PATH. Adding it to ~/.bashrc.\033[0m"
+    echo -e "\nexport PATH=\"$HOME/.local/bin:\$PATH\"" >>"$HOME/.bashrc"
+    echo -e "\033[0;32mPlease restart your terminal or run 'source ~/.bashrc' to update your PATH.\033[0m"
+  fi
 else
-    echo -e "\033[0;33m'$recipe' not found in repo. \033[0;31maborting..\033[0m"
+  echo -e "\033[0;31mFailed to download the script. Please check your internet connection or the repository URL.\033[0m"
+  exit 1
 fi
+
+exit 0

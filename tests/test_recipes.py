@@ -5,7 +5,7 @@ import subprocess
 
 @pytest.fixture
 def script_paths():
-  scripts_dir = "recipes/"
+  scripts_dir = "src/recipes/"
   script_paths = {
     basename: os.path.join(scripts_dir, basename, f"{basename}.sh")
     for basename in os.listdir(scripts_dir)

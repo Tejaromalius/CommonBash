@@ -2,7 +2,7 @@
 function seek() {
   if [[ $1 == "-i" ]]; then
     shift
-    find . -iname "*$1*" -exec du -xhs {} \; | sort -hr | awk '
+    find . -iname "*$1*" -exec du -xhs {} \; | grep -w "$1" | sort -hr | awk '
         BEGIN {
           reset="\033[0m";
           size_color="\033[1;35m"; # Green for sizes
